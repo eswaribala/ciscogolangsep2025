@@ -4,6 +4,35 @@ import (
 	"fmt"
 )
 
+// custom type for devicetype
+type DeviceType int
+
+const (
+	UnKnown DeviceType = iota
+	Router
+	Switch
+	Firewall
+	Server
+	Gateway
+)
+
+func ParseDeviceType(input string) DeviceType {
+	switch input {
+	case "Router":
+		return Router
+	case "Switch":
+		return Switch
+	case "Firewall":
+		return Firewall
+	case "Server":
+		return Server
+	case "Gateway":
+		return Gateway
+	default:
+		return UnKnown
+	}
+}
+
 func main() {
 	var deviceId string
 	var deviceName string
@@ -22,5 +51,6 @@ func main() {
 	fmt.Println("Device ID:", deviceId)
 	fmt.Println("Device Name:", deviceName)
 	fmt.Println("IP Address:", IPAddress)
-	fmt.Println("Device Type:", deviceType)
+	dType := ParseDeviceType(deviceType)
+	fmt.Println("Device Type:", dType)
 }
