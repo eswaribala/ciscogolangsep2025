@@ -7,7 +7,7 @@ import (
 
 var addr *net.TCPAddr
 
-// order 4
+
 func init() {
 	var err error
 	addr, err = net.ResolveTCPAddr("tcp", "127.0.0.1:3306")
@@ -18,7 +18,7 @@ func init() {
 	fmt.Println("Resolved address:", addr)
 }
 
-// order 5
+
 func CallTCP() {
 	fmt.Println("Main function...")
 	fmt.Println("Connecting to server....")
