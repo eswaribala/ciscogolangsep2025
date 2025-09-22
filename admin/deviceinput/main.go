@@ -10,12 +10,15 @@ func main() {
 	var IPAddress string
 	var deviceType string
 	fmt.Println("Enter device details (ID, Name, IP Address, Type) separated by spaces:")
-	_, err := fmt.Scan(&deviceId, &deviceName, &IPAddress, &deviceType)
+	response, err := fmt.Scan(&deviceId, &deviceName, &IPAddress, &deviceType)
 	if err != nil {
 		fmt.Println("Error reading input:", err)
 		return
 	}
-
+	if response != 4 {
+		fmt.Println("Please provide exactly four values.")
+		return
+	}
 	fmt.Println("Device ID:", deviceId)
 	fmt.Println("Device Name:", deviceName)
 	fmt.Println("IP Address:", IPAddress)
