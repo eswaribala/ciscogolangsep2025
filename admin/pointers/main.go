@@ -3,7 +3,7 @@ package main
 import "github.com/brianvoe/gofakeit/v7"
 
 func main() {
-
+	//local variables
 	min := 1000
 	max := 9999
 	otp := genOTP(&min, &max)
