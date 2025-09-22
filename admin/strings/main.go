@@ -19,6 +19,12 @@ func main() {
 	println("Name Length", len(name))
 	//uppercase
 	println("Uppercase:", strings.ToUpper(name))
+
+	//compare name with upper case name
+	println("Compare with Uppercase:", strings.Compare(name, strings.ToUpper(name)))
+	//compare name with upper case name case insensitive
+	println("Compare with Uppercase:", strings.EqualFold(name, strings.ToUpper(name)))
+
 	//lowercase
 	println("Lowercase:", strings.ToLower(name))
 	//contains
