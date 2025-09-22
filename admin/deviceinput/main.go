@@ -5,15 +5,15 @@ import (
 )
 
 // custom type for devicetype
-type DeviceType int
+type DeviceType string
 
 const (
-	UnKnown DeviceType = iota
-	Router
-	Switch
-	Firewall
-	Server
-	Gateway
+	UnKnown DeviceType = "Unknown"
+	Router  DeviceType = "Router"
+	Switch  DeviceType = "Switch"
+	Firewall DeviceType = "Firewall"
+	Server   DeviceType = "Server"
+	Gateway  DeviceType = "Gateway"
 )
 
 func ParseDeviceType(input string) DeviceType {
