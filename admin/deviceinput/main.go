@@ -42,12 +42,9 @@ func main() {
 	var deviceType string
 	fmt.Println("Enter device details (ID, IP Address, Type) separated by spaces:")
 	response, err := fmt.Scan(&deviceId, &IPAddress, &deviceType)
+	fmt.Println("Response:", response)
 	if err != nil {
 		fmt.Println("Error reading input:", err)
-		return
-	}
-	if response != 3 {
-		fmt.Println("Please provide exactly three values.")
 		return
 	}
 	// Flush leftover newline
