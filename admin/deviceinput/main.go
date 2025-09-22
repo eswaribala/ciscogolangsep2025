@@ -1,16 +1,18 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"os"
 )
 
 // custom type for devicetype
 type DeviceType string
 
 const (
-	UnKnown DeviceType = "Unknown"
-	Router  DeviceType = "Router"
-	Switch  DeviceType = "Switch"
+	UnKnown  DeviceType = "Unknown"
+	Router   DeviceType = "Router"
+	Switch   DeviceType = "Switch"
 	Firewall DeviceType = "Firewall"
 	Server   DeviceType = "Server"
 	Gateway  DeviceType = "Gateway"
@@ -38,16 +40,22 @@ func main() {
 	var deviceName string
 	var IPAddress string
 	var deviceType string
-	fmt.Println("Enter device details (ID, Name, IP Address, Type) separated by spaces:")
-	response, err := fmt.Scan(&deviceId, &deviceName, &IPAddress, &deviceType)
+	fmt.Println("Enter device details (ID, IP Address, Type) separated by spaces:")
+	response, err := fmt.Scan(&deviceId, &IPAddress, &deviceType)
 	if err != nil {
 		fmt.Println("Error reading input:", err)
 		return
 	}
-	if response != 4 {
-		fmt.Println("Please provide exactly four values.")
+	if response != 3 {
+		fmt.Println("Please provide exactly three values.")
 		return
 	}
+	// Flush leftover newline
+	reader := bufio.NewReader(os.Stdin)
+	reader.ReadString('\n')
+
+	fmt.Print("Enter Device Name: ")
+	deviceName, _ = reader.ReadString('\n')
 	fmt.Println("Device ID:", deviceId)
 	fmt.Println("Device Name:", deviceName)
 	fmt.Println("IP Address:", IPAddress)
