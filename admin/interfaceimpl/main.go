@@ -27,18 +27,18 @@ func main() {
 	deviceDao = &dev
 
 	//create CSV file header
-	/*
-		csvResponse, err := models.CreateCSVHeader("devices.csv")
-		if err != nil {
-			println("Error creating CSV header:", err.Error())
-		}
-		println("CSV Header Creation Response:", csvResponse)
-	*/
+
+	csvResponse, err := models.CreateCSVHeader("devices.csv")
+	if err != nil {
+		println("Error creating CSV header:", err.Error())
+	}
+	println("CSV Header Creation Response:", csvResponse)
+
 	//call the method
 	response, _ := deviceDao.Save()
 
 	//save to CSV
-	csvResponse, err := deviceDao.SaveToCSV("devices.csv")
+	csvResponse, err = deviceDao.SaveToCSV("devices.csv")
 	if err != nil {
 		println("Error saving to CSV:", err.Error())
 	}

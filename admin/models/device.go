@@ -64,17 +64,23 @@ func DeleteDeviceByID(id string) (bool, error) {
 
 func CreateCSVHeader(fileName string) (bool, error) {
 
-	file, err := os.Create(fileName)
-	if err != nil {
-		return false, err
-	}
-	defer file.Close()
+	_, err := os.Stat(fileName)
+	if err == nil {
+		// File exists
+		return false, errors.New("file already exists")
+	} else {
+		file, err := os.Create(fileName)
+		if err != nil {
+			return false, err
+		}
+		defer file.Close()
 
-	writer := csv.NewWriter(file)
-	defer writer.Flush()
+		writer := csv.NewWriter(file)
+		defer writer.Flush()
 
-	if err := writer.Write([]string{"ID", "Name", "Description", "Type", "Status", "IP Address", "MAC Address"}); err != nil {
-		return false, err
+		if err := writer.Write([]string{"ID", "Name", "Description", "Type", "Status", "IP Address", "MAC Address"}); err != nil {
+			return false, err
+		}
 	}
 
 	return true, nil
