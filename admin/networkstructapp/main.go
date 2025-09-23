@@ -7,13 +7,8 @@ import (
 )
 
 func main() {
-	//create gateway instance
-	gateway := models.NewGateway()
-	//print gateway details
-	fmt.Printf("Gateway ID: %s\n", gateway.ID)
-	fmt.Printf("IP Address: %s\n", gateway.IPAddress)
-	fmt.Printf("Description: %s\n", gateway.Description)
-	fmt.Printf("Name: %s\n", gateway.Name)
-	fmt.Printf("Port: %d\n", gateway.Port)
+	
+	domain := models.NewDomain()
+	fmt.Printf("Domain: %+v\n", domain)
 
 }
