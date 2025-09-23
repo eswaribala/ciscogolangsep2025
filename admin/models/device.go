@@ -1,5 +1,7 @@
 package models
 
+
+
 type Device struct {
 	ID          string `json:"id"`
 	Name        string `json:"name"`
@@ -11,3 +13,14 @@ type Device struct {
 		MACAddress string `json:"mac_address"`
 	}
 }
+
+//methods for Device struct can be added here
+
+var deviceMap = make(map[string]*Device)
+
+func (d *Device) Save() (bool, error) {
+	deviceMap[d.ID] = d
+	return true, nil
+}
+
+
