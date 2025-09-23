@@ -1,6 +1,10 @@
 package models
 
-import "errors"
+import (
+	"encoding/csv"
+	"errors"
+	"os"
+)
 
 type Device struct {
 	ID          string `json:"id"`
@@ -56,4 +60,38 @@ func DeleteDeviceByID(id string) (bool, error) {
 		return true, nil
 	}
 	return false, errors.New("device not found")
+}
+
+func CreateCSVHeader(fileName string) (bool, error) {
+
+	file, err := os.Create(fileName)
+	if err != nil {
+		return false, err
+	}
+	defer file.Close()
+
+	writer := csv.NewWriter(file)
+	defer writer.Flush()
+
+	if err := writer.Write([]string{"ID", "Name", "Description", "Type", "Status", "IP Address", "MAC Address"}); err != nil {
+		return false, err
+	}
+
+	return true, nil
+}
+
+// methods to save device to CSV file
+func (d *Device) SaveToCSV(fileName string) (bool, error) {
+
+	file, err := os.OpenFile(fileName, os.O_APPEND|os.O_WRONLY, os.ModeAppend)
+	if err != nil {
+		return false, err
+	}
+	defer file.Close()
+	writer := csv.NewWriter(file)
+	defer writer.Flush()
+	if err := writer.Write([]string{d.ID, d.Name, d.Description, d.Type, d.Status, d.Network.IPAddress, d.Network.MACAddress}); err != nil {
+		return false, err
+	}
+	return true, nil
 }

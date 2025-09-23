@@ -25,8 +25,23 @@ func main() {
 
 	//interface mapped to receiver
 	deviceDao = &dev
+
+	//create CSV file header
+	csvResponse, err := models.CreateCSVHeader("devices.csv")
+	if err != nil {
+		println("Error creating CSV header:", err.Error())
+	}
+	println("CSV Header Creation Response:", csvResponse)
+
 	//call the method
 	response, _ := deviceDao.Save()
+
+	//save to CSV
+	csvResponse, err = deviceDao.SaveToCSV("devices.csv")
+	if err != nil {
+		println("Error saving to CSV:", err.Error())
+	}
+	println("Save to CSV Response:", csvResponse)
 
 	//print the response
 	println(response)
