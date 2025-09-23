@@ -16,19 +16,19 @@ func main() {
 		dev := models.Device{
 			ID:          gofakeit.UUID(),
 			Name:        gofakeit.Name(),
-			IPAddress:   gofakeit.IPv4Address(),
 			Description: gofakeit.Sentence(10),
-			MACAddress:  gofakeit.MacAddress(),
 			Type:        gofakeit.RandomString([]string{"router", "switch", "firewall", "access point"}),
 			Status:      status[gofakeit.Number(0, 2)],
 		}
+		dev.Network.IPAddress = gofakeit.IPv4Address()
+		dev.Network.MACAddress = gofakeit.MacAddress()
 		// Add the Device to the map
 		device[i] = dev
 	}
 
 	// Print the map
 	for key, value := range device {
-		println(key, value.Name, value.IPAddress, value.Type, value.Status)
+		println(key, value.Name, value.Network.IPAddress, value.Network.MACAddress, value.Type, value.Status)
 	}
 
 	CreateDomainMap()
