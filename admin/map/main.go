@@ -31,4 +31,31 @@ func main() {
 		println(key, value.Name, value.IPAddress, value.Type, value.Status)
 	}
 
+	CreateDomainMap()
+
+}
+
+func CreateDomainMap() {
+
+	// Create a new map
+	domain := make(map[int]models.Domain)
+
+	for i := 1; i <= 5; i++ {
+		// Create a new Domain instance
+		dom := models.Domain{
+			ID:          gofakeit.UUID(),
+			Name:        gofakeit.DomainName(),
+			Description: gofakeit.Sentence(10),
+			Subnets:     models.NewSubNetArray(3),
+		}
+		// Add the Domain to the map
+		domain[i] = dom
+	}
+	// Print the map
+	for key, value := range domain {
+		println(key, value.Name, value.Description)
+		for _, subnet := range value.Subnets {
+			println("  Subnet:", subnet.CIDR, subnet.Description)
+		}
+	}
 }
