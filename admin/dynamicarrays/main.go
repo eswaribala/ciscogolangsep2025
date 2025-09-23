@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/brianvoe/gofakeit/v7"
-	"github.com/bxcodec/faker/v4"
 )
 
 func main() {
@@ -12,7 +11,7 @@ func main() {
 
 	for i := 0; i < 4; i++ {
 
-		devices[i] = "iOT_Device_" + faker.Word()
+		devices[i] = gofakeit.DomainName()
 		ports[i] = gofakeit.IntRange(1, 2000)
 	}
 
