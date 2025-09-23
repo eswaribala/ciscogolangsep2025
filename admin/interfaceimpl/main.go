@@ -40,4 +40,25 @@ func main() {
 	response, _ = deviceDao.Update()
 	println(response)
 
+	//find all devices
+	devices, _ := models.FindAllDevices()
+	for _, d := range devices {
+		println("Device ID:", d.ID, "Name:", d.Name, "Description:", d.Description, "Type:", d.Type, "Status:", d.Status, "IP:", d.Network.IPAddress, "MAC:", d.Network.MACAddress)
+	}
+
+	//find device by ID
+	foundDevice, err := models.FindDeviceByID(dev.ID)
+	if err != nil {
+		println("Error:", err.Error())
+	} else {
+		println("Found Device ID:", foundDevice.ID, "Name:", foundDevice.Name, "Description:", foundDevice.Description, "Type:", foundDevice.Type, "Status:", foundDevice.Status, "IP:", foundDevice.Network.IPAddress, "MAC:", foundDevice.Network.MACAddress)
+	}
+	//delete device by ID
+	deleted, err := models.DeleteDeviceByID(dev.ID)
+	if err != nil {
+		println("Error:", err.Error())
+	} else {
+		println("Deleted Device ID:", dev.ID, "Success:", deleted)
+	}
+
 }
