@@ -2,6 +2,7 @@ package models
 
 import (
 	"github.com/brianvoe/gofakeit/v7"
+	"github.com/mitchellh/mapstructure"
 )
 
 type Domain struct {
@@ -18,4 +19,12 @@ func NewDomain() *Domain {
 		Description: gofakeit.Sentence(5),
 		Subnets:     NewSubNetArray(3),
 	}
+}
+
+func DomainStructureToMap(domain *Domain) map[string]interface{} {
+	//convert structure to map
+	var domainMap map[string]interface{}
+	mapstructure.Decode(domain, &domainMap)
+	return domainMap
+
 }

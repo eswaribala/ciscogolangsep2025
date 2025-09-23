@@ -4,13 +4,14 @@ import (
 	"fmt"
 
 	"github.com/brianvoe/gofakeit/v7"
+	"github.com/mitchellh/mapstructure"
 )
 
 type Subnet struct {
 	ID              string  `json:"id"`
 	CIDR            string  `json:"cidr"`
 	Description     string  `json:"description"`
-	GatewayInstance Gateway  `json:"gateway_instance"`
+	GatewayInstance Gateway `json:"gateway_instance"`
 }
 
 func NewSubNetArray(count int) []*Subnet {
@@ -24,4 +25,11 @@ func NewSubNetArray(count int) []*Subnet {
 		}
 	}
 	return subnets
+}
+
+func SubnetStructureToMap(subnet *Subnet) map[string]interface{} {
+	//convert structure to map
+	var subnetMap map[string]interface{}
+	mapstructure.Decode(subnet, &subnetMap)
+	return subnetMap
 }

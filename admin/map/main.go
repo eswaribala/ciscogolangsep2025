@@ -41,15 +41,9 @@ func CreateDomainMap() {
 	domain := make(map[int]models.Domain)
 
 	for i := 1; i <= 5; i++ {
-		// Create a new Domain instance
-		dom := models.Domain{
-			ID:          gofakeit.UUID(),
-			Name:        gofakeit.DomainName(),
-			Description: gofakeit.Sentence(10),
-			Subnets:     models.NewSubNetArray(3),
-		}
+
 		// Add the Domain to the map
-		domain[i] = dom
+		domain[i] = *models.NewDomain()
 	}
 	// Print the map
 	for key, value := range domain {

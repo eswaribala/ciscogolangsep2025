@@ -9,12 +9,19 @@ import (
 func main() {
 
 	domain := models.NewDomain()
-	fmt.Printf("Domain: %s\n", domain.ID)
-	fmt.Printf("Name: %s\n", domain.Name)
-	fmt.Printf("Description: %s\n", domain.Description)
+	for key, value := range models.DomainStructureToMap(domain) {
+		/*
+			if key == "Subnets" {
+				for i, subnet := range value.([]*models.Subnet) {
+					for sk, sv := range models.SubnetStructureToMap(subnet) {
+						fmt.Printf("Subnet %d - %s: %v\n", i+1, sk, sv)
+					}
 
-	for _, subnet := range domain.Subnets {
-		fmt.Printf("Subnet ID: %s, CIDR: %s, Gateway: %+v\n", subnet.ID, subnet.CIDR, subnet.GatewayInstance)
+				}
+
+			}
+		*/
+		fmt.Printf("%s: %v\n", key, value)
+
 	}
-
 }
