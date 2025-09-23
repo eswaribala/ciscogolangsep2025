@@ -64,7 +64,7 @@ func DeleteDeviceByID(id string) (bool, error) {
 
 func CreateCSVHeader(fileName string) (bool, error) {
 
-	file, err := os.OpenFile(fileName, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0644)
+	file, err := os.Create(fileName)
 	if err != nil {
 		return false, err
 	}

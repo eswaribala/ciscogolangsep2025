@@ -34,7 +34,6 @@ func main() {
 		}
 		println("CSV Header Creation Response:", csvResponse)
 	*/
-
 	//call the method
 	response, _ := deviceDao.Save()
 
