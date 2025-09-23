@@ -18,6 +18,7 @@ func TotalCost(node *DeviceNode) float64 {
 		fmt.Printf("Node ID: %d, Cost: %.2f\n", node.ID, node.Cost)
 	}
 	for _, child := range node.Children {
+		//recursion
 		totalCost += TotalCost(child)
 		fmt.Printf("Node ID: %d, Cost: %.2f\n", child.ID, child.Cost)
 	}
