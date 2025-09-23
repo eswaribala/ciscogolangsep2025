@@ -1,6 +1,6 @@
 package models
 
-
+import "errors"
 
 type Device struct {
 	ID          string `json:"id"`
@@ -23,4 +23,10 @@ func (d *Device) Save() (bool, error) {
 	return true, nil
 }
 
-
+func (d *Device) Update() (bool, error) {
+	if _, exists := deviceMap[d.ID]; exists {
+		deviceMap[d.ID] = d
+		return true, nil
+	}
+	return false, errors.New("device not found")
+}

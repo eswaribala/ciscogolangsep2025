@@ -30,4 +30,14 @@ func main() {
 
 	//print the response
 	println(response)
+
+	//update the device
+	dev.Description = gofakeit.Sentence(15)
+	dev.Status = status[gofakeit.Number(0, 2)]
+	dev.Type = gofakeit.RandomString([]string{"router", "switch", "firewall", "access point"})
+	dev.Network.IPAddress = gofakeit.IPv4Address()
+	dev.Network.MACAddress = gofakeit.MacAddress()
+	response, _ = deviceDao.Update()
+	println(response)
+
 }
