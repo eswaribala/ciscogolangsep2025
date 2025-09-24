@@ -1,6 +1,8 @@
 package main
 
 import (
+	"bufio"
+	"os"
 	"time"
 
 	"github.com/brianvoe/gofakeit/v7"
@@ -43,25 +45,37 @@ func monitorBandwidth(bandwidthChannel chan int) {
 	}
 }
 
+func quit(quitChannel chan bool) {
+	// Simulate quit signal after some time
+	//time.Sleep(60 * time.Second)
+	println("Press Enter to quit...")
+	bufio.NewReader(os.Stdin).ReadBytes('\n')
+	quitChannel <- true
+}
+
 func main() {
 
 	healthChannel := make(chan string)
 	alertChannel := make(chan string)
 	bandwidthChannel := make(chan int)
+	quitChannel := make(chan bool)
 
 	go monitorHealth(healthChannel)
 	go monitorAlerts(alertChannel)
 	go monitorBandwidth(bandwidthChannel)
+	go quit(quitChannel)
 
 	for {
 		select {
 		case healthStatus := <-healthChannel:
-
 			println("Health Status Update:", healthStatus)
 		case alertMessage := <-alertChannel:
 			println("Alert Received:", alertMessage)
 		case bandwidthUsage := <-bandwidthChannel:
 			println("Bandwidth Usage Update:", bandwidthUsage, "%")
+		case <-quitChannel:
+			println("Quit signal received. Exiting...")
+			return
 
 		default:
 			time.Sleep(1 * time.Second) // Prevent busy waiting
