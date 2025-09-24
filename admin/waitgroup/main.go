@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"sync"
 	"time"
 
@@ -51,7 +52,13 @@ func monitorBandwidth(wg *sync.WaitGroup) {
 func main() {
 
 	var wg sync.WaitGroup
-	wg.Add(3)
+	println("Enter number of routines to run each monitor (default 3):")
+	var routinesCount int
+	fmt.Scanln(&routinesCount)
+	if routinesCount <= 0 {
+		routinesCount = 3
+	}
+	wg.Add(routinesCount)
 
 	go monitorHealth(&wg)
 	go monitorAlerts(&wg)
