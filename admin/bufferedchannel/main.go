@@ -8,13 +8,14 @@ import (
 )
 
 func updateConfigWorker(updateConfigChannel chan *models.Device, devices *[]*models.Device) {
-    count := 0
+	count := 0
 	time.Sleep(2 * time.Second)
 	for _, dev := range *devices {
+		updateConfigChannel <- dev
 		count++
 		println("Updating config for device:", count, "->", dev.Name)
-		time.Sleep(1 * time.Second) // Simulate time taken to update config
-		updateConfigChannel <- dev
+		//time.Sleep(1 * time.Second) // Simulate time taken to update config
+
 	}
 
 }
@@ -23,7 +24,7 @@ func main() {
 	//create the buffered channel
 	updateConfigChannel := make(chan *models.Device, 5)
 	status := []string{"active", "inactive", "maintenance"}
-	count := gofakeit.Number(5, 15)
+	count := gofakeit.Number(10, 15)
 
 	devices := make([]*models.Device, count)
 
