@@ -17,7 +17,7 @@ func checkLink(link string, channel chan string) {
 
 	println(link + " - " + resp.Status)
 	//send the message to the channel
-	channel <- link + " - " + resp.Status
+	channel <- link + " - " + resp.Status+"-"
 
 }
 
@@ -28,11 +28,13 @@ func main() {
 
 	link := []string{"https://www.google.com", "https://www.facebook.com", "https://www.youtube.com", "https://www.twitter.com", "https://www.instagram.com"}
 
+	var message string
 	for _, url := range link {
 		//rotines
 		go checkLink(url, channel)
 		//read the message from the channel
-		println(<-channel)
+		message = <-channel
+		println(message)
 
 	}
 	//waiting to read all messages from the channel
