@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -11,7 +12,7 @@ import (
 )
 
 // dedicated function to recover from panic
-func recoverFromIPAddressPanic() {
+func recoverFromPanic() {
 	if r := recover(); r != nil {
 		fmt.Println("Recovered from panic:", r)
 	}
@@ -36,7 +37,7 @@ func isValidIPv4(ip string) bool {
 }
 
 func ValidateAPICall(url string) {
-	defer recoverFromIPAddressPanic()
+	defer recoverFromPanic()
 
 	resp, err := http.Get(url)
 	if err != nil {
@@ -59,30 +60,29 @@ func ValidateAPICall(url string) {
 	println("API call successful")
 }
 
-func ValidateDevice(device *models.Device) bool {
-	defer recoverFromAPIPanic()
+func ValidateDevice(device *models.Device) (bool, error) {
 
 	if device == nil {
-		panic("device is nil")
+		return false, errors.New("device is nil")
 	}
 	if device.ID == "" || !isValidUUID(device.ID) {
-		panic("device ID is empty or invalid")
+		return false, errors.New("invalid device ID")
 	}
 
 	if !isValidIPv4(device.Network.IPAddress) {
-		panic("invalid IP address")
+		return false, errors.New("invalid IP address")
 	}
 	if device.Network.MACAddress == "" {
-		panic("device MAC address is empty")
+
 	}
-	return true
+	return true, nil
 }
 
 func main() {
 	status := []string{"active", "inactive", "maintenance"}
 
 	dev := models.Device{
-		ID:          gofakeit.UUID(),
+		ID:          "",
 		Name:        gofakeit.Name(),
 		Description: gofakeit.Sentence(10),
 		Type:        gofakeit.RandomString([]string{"router", "switch", "firewall", "access point"}),
@@ -91,7 +91,12 @@ func main() {
 	dev.Network.IPAddress = gofakeit.IPv4Address()
 	dev.Network.MACAddress = gofakeit.MacAddress()
 	// Add the Device to the map
-	resp := ValidateDevice(&dev)
+	resp, err := ValidateDevice(&dev)
+
+	if err != nil {
+		fmt.Println("Device validation failed:", err)
+		return
+	}
 
 	if resp {
 		fmt.Println("Device is valid")
