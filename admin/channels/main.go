@@ -17,7 +17,7 @@ func checkLink(link string, channel chan string) {
 
 	println(link + " - " + resp.Status)
 	//send the message to the channel
-	channel <- link + " - " + resp.Status+"-"
+	channel <- link + " - " + resp.Status + "-"
 
 }
 
@@ -37,7 +37,7 @@ func main() {
 		println(message)
 
 	}
-	//waiting to read all messages from the channel
+	//listening to read all messages from the channel
 
 	//println(<-channel)
 
