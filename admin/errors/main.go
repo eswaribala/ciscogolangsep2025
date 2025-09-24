@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"io"
 	"net/http"
 	"regexp"
@@ -9,9 +10,16 @@ import (
 	"github.com/cisco/admin/models"
 )
 
-func recoverFromPanic() {
+// dedicated function to recover from panic
+func recoverFromIPAddressPanic() {
 	if r := recover(); r != nil {
-		println("Recovered from panic:", r)
+		fmt.Println("Recovered from panic:", r)
+	}
+}
+
+func recoverFromAPIPanic() {
+	if r := recover(); r != nil {
+		fmt.Println("Recovered from panic:", r)
 	}
 }
 
@@ -28,7 +36,7 @@ func isValidIPv4(ip string) bool {
 }
 
 func ValidateAPICall(url string) {
-	defer recoverFromPanic()
+	defer recoverFromIPAddressPanic()
 
 	resp, err := http.Get(url)
 	if err != nil {
@@ -52,7 +60,7 @@ func ValidateAPICall(url string) {
 }
 
 func ValidateDevice(device *models.Device) bool {
-	defer recoverFromPanic()
+	defer recoverFromAPIPanic()
 
 	if device == nil {
 		panic("device is nil")
@@ -86,10 +94,10 @@ func main() {
 	resp := ValidateDevice(&dev)
 
 	if resp {
-		println("Device is valid")
+		fmt.Println("Device is valid")
 	}
 
-	ValidateAPICall("https://jsonplaceholder.typcode.com/users/1")
+	ValidateAPICall("https://jsonplaceholder.typicode.com/users/11")
 
-	println("Main function completed.....status:", resp)
+	fmt.Println("Main function completed.....status:", resp)
 }
