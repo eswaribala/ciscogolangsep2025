@@ -52,6 +52,11 @@ func quit(quitChannel chan bool) {
 	bufio.NewReader(os.Stdin).ReadBytes('\n')
 	quitChannel <- true
 }
+func timeOut(timeOutChannel chan bool) {
+	// Simulate timeout signal after some time
+	time.Sleep(60 * time.Second)
+	timeOutChannel <- true
+}
 
 func main() {
 
@@ -59,11 +64,13 @@ func main() {
 	alertChannel := make(chan string)
 	bandwidthChannel := make(chan int)
 	quitChannel := make(chan bool)
+	timeOutChannel := make(chan bool)
 
 	go monitorHealth(healthChannel)
 	go monitorAlerts(alertChannel)
 	go monitorBandwidth(bandwidthChannel)
 	go quit(quitChannel)
+	go timeOut(timeOutChannel)
 
 	for {
 		select {
@@ -76,7 +83,9 @@ func main() {
 		case <-quitChannel:
 			println("Quit signal received. Exiting...")
 			return
-
+		case <-timeOutChannel:
+			println("Timeout reached. Exiting...")
+			return
 		default:
 			time.Sleep(1 * time.Second) // Prevent busy waiting
 			println("No updates, system is stable...")
