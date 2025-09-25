@@ -7,7 +7,8 @@ import (
 )
 
 func main() {
-	store.MySQLConnectionHelper()
+	db := store.MySQLConnectionHelper()
+	store.GetTableInstance(db)
 
 	fmt.Println("Database connection established")
 }

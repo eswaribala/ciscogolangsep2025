@@ -3,13 +3,22 @@ package store
 import (
 	"fmt"
 	"os"
+	"sync"
 
 	"github.com/cisco/admin/gormdevice/models"
 	"github.com/joho/godotenv"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"gorm.io/gorm/logger"
 )
+
+var once sync.Once
+
+func GenerateTable(db *gorm.DB) {
+	println("Entering table creation")
+
+	db.AutoMigrate(&models.Device{})
+	println("Table Created")
+}
 
 func MySQLConnectionHelper() *gorm.DB {
 
@@ -21,15 +30,15 @@ func MySQLConnectionHelper() *gorm.DB {
 	port := os.Getenv("port")
 
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", username, password, host, port, dbname)
-	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
-		Logger: logger.Default.LogMode(logger.Info),
-	})
+	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
 	if err != nil {
 		panic("failed to connect database")
 	}
 
-	db.AutoMigrate(&models.Device{})
-
 	return db
+}
+
+func GetTableInstance(db *gorm.DB) {
+	once.Do(func() { GenerateTable(db) })
 }
