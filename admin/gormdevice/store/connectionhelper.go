@@ -12,6 +12,12 @@ import (
 
 var once sync.Once
 
+func GenerateAutoMigrationForeignKey(db *gorm.DB) {
+	println("Entering table creation")
+	db.AutoMigrate(&DeviceInterface{}, &Site{})
+	println("Table Created")
+}
+
 func GenerateTable(db *gorm.DB) {
 	println("Entering table creation")
 
@@ -39,5 +45,6 @@ func MySQLConnectionHelper() *gorm.DB {
 }
 
 func GetTableInstance(db *gorm.DB) {
-	once.Do(func() { GenerateTable(db) })
+	//once.Do(func() { GenerateTable(db) })
+	once.Do(func() { GenerateAutoMigrationForeignKey(db) })
 }
