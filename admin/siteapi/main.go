@@ -22,12 +22,15 @@ import (
 // @BasePath /
 func main() {
 
+	//db := store.MySQLConnectionHelper()
+	//store.GetTableInstance(db)
+
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("POST /sites/v1.0", store.SaveSiteInfo)
 	mux.HandleFunc("GET /sites/v1.0", store.GetAllSiteInfo)
 	mux.HandleFunc("GET /sites/v1.0/{id}", store.GetSiteInfoByID)
-	mux.HandleFunc("PUT /sites/v1.0/{id}", store.UpdateSiteInfoByID)
+	mux.HandleFunc("PUT /sites/v1.0", store.UpdateSiteInfoByID)
 	mux.HandleFunc("DELETE /sites/v1.0/{id}", store.DeleteSiteInfoByID)
 
 	// Swagger UI served at /swagger/

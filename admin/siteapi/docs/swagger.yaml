@@ -93,7 +93,7 @@ paths:
     delete:
       consumes:
       - application/json
-      description: Delete site by id
+      description: Delete requested site
       parameters:
       - description: ID of the Site
         in: path
@@ -107,7 +107,19 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/store.Site'
-      summary: Delete site
+        "400":
+          description: Invalid ID supplied
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Site not found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Delete requested site
       tags:
       - sites
     get:

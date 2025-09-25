@@ -119,18 +119,23 @@ func UpdateSiteInfoByID(writer http.ResponseWriter, request *http.Request) {
 
 }
 
-// DeleteSite godoc
-// @Summary Delete site
-// @Description Delete site by id
+// DeleteSiteById godoc
+// @Summary Delete requested site
+// @Description Delete requested site
 // @Tags sites
 // @Accept  json
 // @Produce  json
 // @Param id path int true "ID of the Site"
 // @Success 200 {object} Site
+// @Failure 400 {object} map[string]string "Invalid ID supplied"
+// @Failure 404 {object} map[string]string "Site not found"
 // @Router /sites/v1.0/{id} [delete]
 func DeleteSiteInfoByID(writer http.ResponseWriter, request *http.Request) {
 	db := MySQLConnectionHelper()
-	result := db.Delete(&Site{}, request.URL.Query().Get("id"))
+	println("Id:", request.URL.Query().Get("id"))
+	idToDelete := request.URL.Query().Get("id")
+	println("ID to delete:", idToDelete)
+	result := db.Where("id=?", idToDelete).Delete(&Site{})
 	if result.Error != nil {
 		http.Error(writer, result.Error.Error(), http.StatusInternalServerError)
 		return

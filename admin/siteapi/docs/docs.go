@@ -172,7 +172,7 @@ const docTemplate = `{
                 }
             },
             "delete": {
-                "description": "Delete site by id",
+                "description": "Delete requested site",
                 "consumes": [
                     "application/json"
                 ],
@@ -182,7 +182,7 @@ const docTemplate = `{
                 "tags": [
                     "sites"
                 ],
-                "summary": "Delete site",
+                "summary": "Delete requested site",
                 "parameters": [
                     {
                         "type": "integer",
@@ -197,6 +197,24 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/store.Site"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid ID supplied",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Site not found",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
                         }
                     }
                 }
