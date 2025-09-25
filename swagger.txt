@@ -1,0 +1,65 @@
+go get -u github.com/swaggo/swag/cmd/swag
+go get -u github.com/swaggo/http-swagger
+go get -u github.com/alecthomas/template
+
+Generate Swagger documentation
+Let us divide this whole process of API documentation into 3 steps:
+
+Adding annotations in code
+Generating Swagger specs (swagger.json and swagger.yaml)
+Serving the Swagger UI using the specs generated in the previous step
+
+ Generate swagger.json
+Once we are done annotating our main method and all the APIs, we shall generate the swagger docs with the swag init command, as below:
+
+add all the required annotations
+
+// @title Traders API
+// @version 1.0
+// @description This is a sample service for managing Traders
+// @termsOfService http://swagger.io/terms/
+// @contact.name API Support
+// @contact.email param@swagger.io
+// @license.name Apache 2.0
+// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
+// @host localhost:7070
+// @BasePath /
+# In your project dir (~/GOPATH/src/swaggo-orders-api normally)
+swag init -g main.go
+
+http://localhost:6062/swagger/index.html
+
+----------------------------------------
+🔧 Steps to set up Swagger UI for your Go API
+1. Install dependencies
+go get -u github.com/swaggo/swag/cmd/swag
+go get -u github.com/swaggo/gin-swagger
+go get -u github.com/swaggo/files
+
+2. Initialize swag
+
+Steps to install swag
+1. Install via go install
+
+Run this (make sure you’re on Go 1.17+):
+
+go install github.com/swaggo/swag/cmd/swag@latest
+
+
+That will place the swag binary in your Go bin directory:
+
+On Linux/macOS: $HOME/go/bin/swag
+
+On Windows: %USERPROFILE%\go\bin\swag.exe
+
+
+Run this inside your project root (where main.go lives):
+
+swag init
+
+
+This generates two files:
+
+docs/docs.go
+
+docs/swagger.json / docs/swagger.yaml
