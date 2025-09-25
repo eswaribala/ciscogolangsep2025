@@ -20,7 +20,7 @@ func main() {
 		IPAddress:   gofakeit.IPv4Address(),
 		Location:    gofakeit.City(),
 		Status:      gofakeit.Bool(),
-		CreatedAt:   "2025-09-01",
+		CreatedAt:   "2025-09-21",
 		UpdatedAt:   "2025-09-21",
 	}
 
