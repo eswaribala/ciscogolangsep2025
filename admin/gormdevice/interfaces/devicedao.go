@@ -1,13 +1,13 @@
 package interfaces
 
 import (
-	"github.com/cisco/admin/gormdevice/models"
+	"github.com/cisco/admin/gormdevice/store"
 )
 
 type DeviceDAO interface {
-	GetAllDevices() ([]*models.Device, error)
-	GetDeviceByID(id uint) (*models.Device, error)
-	CreateDevice() (*models.Device, error)
-	UpdateDevice(location string, status bool) (device *models.Device, err error)
+	GetAllDevices() ([]*store.Device, error)
+	GetDeviceByID(id uint) (*store.Device, error)
+	CreateDevice() (*store.Device, error)
+	UpdateDevice(location string, status bool) (device *store.Device, err error)
 	DeleteDevice(id uint) (bool, error)
 }
