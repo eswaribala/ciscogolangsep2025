@@ -25,7 +25,7 @@ type Post struct {
 // ---- Config ----
 const (
 	baseURL           = "https://jsonplaceholder.typicode.com"
-	apiPath           = "/posts/1"
+	apiPath           = "/posts/3"
 	clientTimeout     = 4 * time.Second
 	retryMaxAttempts  = 3
 	retryBaseBackoff  = 200 * time.Millisecond
