@@ -29,3 +29,14 @@ func TestPacketLossRate(t *testing.T) {
 	}
 
 }
+
+
+func TestGETOTP(t *testing.T) {
+	min := 100000
+	max := 999999
+	otp := GETOTP(min, max)
+	if otp < min || otp > max {
+		t.Errorf("Expected OTP to be between %d and %d, got %d", min, max, otp)
+	}
+	t.Logf("Generated OTP: %d", otp)
+}

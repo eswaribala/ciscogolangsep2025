@@ -1,0 +1,10 @@
+mode: set
+github.com/cisco/admin/unittesting/network.go:7.35,11.16 2 1
+github.com/cisco/admin/unittesting/network.go:11.16,13.3 1 0
+github.com/cisco/admin/unittesting/network.go:14.2,15.41 2 1
+github.com/cisco/admin/unittesting/network.go:18.60,21.16 2 1
+github.com/cisco/admin/unittesting/network.go:21.16,23.3 1 0
+github.com/cisco/admin/unittesting/network.go:24.2,26.22 3 1
+github.com/cisco/admin/unittesting/network.go:29.57,32.16 2 1
+github.com/cisco/admin/unittesting/network.go:32.16,34.3 1 0
+github.com/cisco/admin/unittesting/network.go:35.2,37.25 3 1

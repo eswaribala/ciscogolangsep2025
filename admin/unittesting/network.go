@@ -2,6 +2,8 @@ package main
 
 import (
 	"net/http"
+
+	"github.com/brianvoe/gofakeit/v7"
 )
 
 func IsServiceUp(url string) bool {
@@ -35,4 +37,9 @@ func PacketLossRate(url string, threshold float64) bool {
 	defer resp.Body.Close()
 	packetLoss := resp.Header.Get("X-Packet-Loss")
 	return packetLoss != ""
+}
+
+
+func GETOTP(min int, max int) int {
+	return gofakeit.Number(min, max)
 }
