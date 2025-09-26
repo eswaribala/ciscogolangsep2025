@@ -1,0 +1,13 @@
+#first run code coverage
+go test -cover ./...
+go test -coverprofile=profile.out ./...
+go tool cover –html=profile.out
+
+#test report 
+
+go install github.com/vakenbolt/go-test-report/
+
+go test -json | go-test-report
+go test -json | go-test-report -o my-test-report.html
+go test -json | go-test-report -t "My Test Report“
+
