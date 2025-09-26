@@ -22,11 +22,7 @@ func MongoConnectionHelper() (mongo.Client, error) {
 	if err != nil {
 		log.Fatalf("Failed to connect to MongoDB: %v", err)
 	}
-	defer func() {
-		if err = client.Disconnect(context.TODO()); err != nil {
-			log.Fatalf("Failed to disconnect MongoDB: %v", err)
-		}
-	}()
+
 	// Use the client...
 	return *client, nil
 }
