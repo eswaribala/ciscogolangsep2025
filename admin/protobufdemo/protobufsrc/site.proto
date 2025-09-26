@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package protobufsrc;
+option go_package = "github.com/cisco/admin/protobufdemo/protobufsrc/gen/demo/v1;v1";
+
+import "google/protobuf/timestamp.proto"; // for created_at
+
+message Site {
+  int64 site_id = 1;                        // field numbers are forever
+  string host_name= 2;
+  string location = 3;                    // optional presence: see below
+  google.protobuf.Timestamp created_at = 4;
+  string status = 5;
+  string description = 6;
+  
+}
