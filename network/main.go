@@ -2,11 +2,12 @@ package main
 
 import (
 	"net/http"
+	"time"
 
 	"log"
 
-	_ "github.com/cisco/network/siteapi/docs" // This line is necessary for go-swagger to find your docs
-	"github.com/cisco/network/siteapi/store"
+	_ "github.com/cisco/network/docs" // This line is necessary for go-swagger to find your docs
+	"github.com/cisco/network/store"
 	httpSwagger "github.com/swaggo/http-swagger"
 )
 
@@ -21,15 +22,24 @@ import (
 // @host localhost:7072
 // @BasePath /
 func main() {
-
-	//db := store.MySQLConnectionHelper()
-	//store.GetTableInstance(db)
+	store.VaultConnection()
+	time.Sleep(30 * time.Second) // Wait for Vault to be ready
+	db := store.MySQLConnectionHelper()
+	store.GetTableInstance(db)
+	res := store.EnsureTopic()
+	if res != nil {
+		log.Fatalf("failed to ensure kafka topic: %v", res)
+	}
+	println("Kafka topic ensured")
+	store.InitKafkaWriters()
+	//defer store.CloseKafkaWriters()
 
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("POST /sites/v1.0", store.SaveSiteInfo)
 	mux.HandleFunc("GET /sites/v1.0", store.GetAllSiteInfo)
 	mux.HandleFunc("GET /sites/v1.0/{id}", store.GetSiteInfoByID)
+	mux.HandleFunc("GET /sites/v1.0/kafka/{id}", store.PublishSiteInfoByID)
 	mux.HandleFunc("PUT /sites/v1.0", store.UpdateSiteInfoByID)
 	mux.HandleFunc("DELETE /sites/v1.0/{id}", store.DeleteSiteInfoByID)
 

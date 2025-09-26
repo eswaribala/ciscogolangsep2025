@@ -31,6 +31,7 @@ services:
       - "7072:7072"
 volumes:
   data:
-networks:
-  cisco:
-    external: true
+networks: 
+  default: 
+    external: 
+      name: cisco

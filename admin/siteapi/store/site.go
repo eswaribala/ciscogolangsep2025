@@ -3,6 +3,7 @@ package store
 import (
 	"encoding/json"
 	"net/http"
+	"strconv"
 )
 
 type Site struct {
@@ -132,10 +133,15 @@ func UpdateSiteInfoByID(writer http.ResponseWriter, request *http.Request) {
 // @Router /sites/v1.0/{id} [delete]
 func DeleteSiteInfoByID(writer http.ResponseWriter, request *http.Request) {
 	db := MySQLConnectionHelper()
-	println("Id:", request.URL.Query().Get("id"))
-	idToDelete := request.URL.Query().Get("id")
-	println("ID to delete:", idToDelete)
-	result := db.Where("id=?", idToDelete).Delete(&Site{})
+	// Extract from path instead of query
+	idStr := request.PathValue("id")
+	id, err := strconv.Atoi(idStr)
+	if err != nil || id <= 0 {
+		http.Error(writer, `{"error":"Invalid ID supplied"}`, http.StatusBadRequest)
+		return
+	}
+	println("ID to delete:", id)
+	result := db.Where("id=?", id).Delete(&Site{})
 	if result.Error != nil {
 		http.Error(writer, result.Error.Error(), http.StatusInternalServerError)
 		return

@@ -22,8 +22,9 @@ func GenerateAutoMigration(db *gorm.DB) {
 func MySQLConnectionHelper() *gorm.DB {
 
 	_ = godotenv.Load(".env")
-	username := os.Getenv("username")
-	password := os.Getenv("password")
+	user, pass := VaultConnection()
+	username := user
+	password := pass
 	dbname := os.Getenv("dbname")
 	host := os.Getenv("host")
 	port := os.Getenv("port")
