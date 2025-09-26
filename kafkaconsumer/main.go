@@ -8,6 +8,7 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/cisco/kafkaconsumer/store"
 	"github.com/joho/godotenv"
 	"github.com/segmentio/kafka-go"
 )
@@ -59,6 +60,7 @@ func main() {
 
 		// --- Your processing here ---
 		log.Printf("partition=%d offset=%d key=%s value=%s", m.Partition, m.Offset, string(m.Key), string(m.Value))
+		store.SaveEvent(string(m.Value))
 		if len(m.Headers) > 0 {
 			for _, h := range m.Headers {
 				log.Printf("  header %s=%s", h.Key, string(h.Value))
