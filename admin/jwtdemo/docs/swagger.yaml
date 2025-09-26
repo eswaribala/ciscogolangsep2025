@@ -1,0 +1,111 @@
+basePath: /
+definitions:
+  main.APIError:
+    properties:
+      message:
+        example: invalid credentials
+        type: string
+    type: object
+  main.LoginRequest:
+    properties:
+      password:
+        example: admin
+        type: string
+      username:
+        example: admin
+        type: string
+    type: object
+  main.Profile:
+    properties:
+      expires:
+        example: "2025-09-26T13:00:00Z"
+        type: string
+      issuer:
+        example: jwtdemo
+        type: string
+      role:
+        example: demo-admin
+        type: string
+      username:
+        example: admin
+        type: string
+    type: object
+  main.TokenResponse:
+    properties:
+      access_token:
+        example: <jwt>
+        type: string
+    type: object
+info:
+  contact:
+    email: you@example.com
+    name: API Support
+  description: Simple JWT authentication example with Swagger UI (Gin + swaggo).
+  title: JWT Auth Demo API
+  version: "1.0"
+paths:
+  /api/profile:
+    get:
+      description: Requires Bearer token
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Profile'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/main.APIError'
+      security:
+      - BearerAuth: []
+      summary: Get profile (protected)
+      tags:
+      - profile
+  /health:
+    get:
+      description: Simple health endpoint
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: Health check
+      tags:
+      - public
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: 'Use demo creds to get a JWT: username=admin, password=admin'
+      parameters:
+      - description: Credentials
+        in: body
+        name: creds
+        required: true
+        schema:
+          $ref: '#/definitions/main.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.TokenResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/main.APIError'
+      summary: Login (demo)
+      tags:
+      - auth
+schemes:
+- http
+securityDefinitions:
+  BearerAuth:
+    description: 'Enter: Bearer {your JWT}'
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
