@@ -1,5 +1,6 @@
 package main
-import(
+
+import (
 	"fmt"
 	"time"
 
@@ -10,13 +11,12 @@ import(
 
 func main() {
 	site := &v1.Site{
-		SiteId:     12345,
-		HostName:   "example.com",
-		Location:   "Datacenter 1",
-		CreatedAt:  timestamppb.Now(),
-		Status:     "active",
+		SiteId:      12345,
+		HostName:    "example.com",
+		Location:    "Datacenter 1",
+		CreatedAt:   timestamppb.Now(),
+		Status:      "active",
 		Description: "Primary site",
-
 	}
 
 	// Encode (marshal) to []byte

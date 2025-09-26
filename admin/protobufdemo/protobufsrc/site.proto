@@ -11,6 +11,6 @@ message Site {
   string location = 3;                    // optional presence: see below
   google.protobuf.Timestamp created_at = 4;
   string status = 5;
-  string description = 6;
+  string description = 6;  
   
 }
